@@ -67,52 +67,34 @@ The React dev server typically runs on http://localhost:3000
 
 Open the frontend URL in your browser. The frontend should call the Django API to fetch news and sentiment.
 
-## Creating an API key
 
-You can create an API key in several ways. The project includes a small utility script at `scripts/generate_api_key.py` (see repository) to generate a strong key and optionally write it into a `.env` file.
+# 📰 News Fetcher — Latest World News using NewsData.io API
 
-Examples:
+This project fetches and displays the **latest world news** using the [NewsData.io API](https://newsdata.io/).  
+It retrieves real-time headlines, descriptions, and links from multiple global sources in various categories.
 
-- Use the helper script (from project root):
-  - Print a key:
-    ```bash
-    python3 scripts/generate_api_key.py
-    ```
-  - Generate and append to `.env`:
-    ```bash
-    python3 scripts/generate_api_key.py --write
-    ```
+---
 
-- Or generate manually:
-  ```bash
-  python3 - <<'PY'
-  import secrets
-  print(secrets.token_urlsafe(32))
-  PY
-  ```
+## 🚀 Features
 
-Store the generated key as an environment variable called `API_KEY` (or whichever variable your Django settings reference). Example `.env` entry:
-```
-API_KEY=your-generated-api-key-here
-```
+- Fetches the **latest breaking news** across the world  
+- Supports filtering by:
+  - 🌎 Country
+  - 🏷️ Category (e.g., politics, sports, technology)
+  - 🌐 Language  
+- Handles **pagination** to load multiple pages of news  
+- Can be easily integrated into Python scripts, Django APIs, or web applications  
 
-## Using the API key (client side)
-When making requests to your API from the frontend, send the key in a header. Example header options:
-- X-API-KEY: <your-key>
-- Authorization: Api-Key <your-key>
+---
 
-Update your frontend API client to include the header in requests.
+## 🧩 Requirements
 
-## Server-side (Django) usage
-- Read the key in Django settings from the environment (example using os.environ or django-environ).
-- Validate incoming requests by checking the header value against the configured `API_KEY`.
-- For production, rotate keys periodically and store them securely (vault, secrets manager).
+- Python 3.8 or above  
+- `requests` library  
 
-A simple middleware or decorator can be used to enforce the API key on protected endpoints.
-
-## CORS & dev notes
-- If frontend runs on a different port, ensure CORS is configured (install `django-cors-headers` and add allowed origins).
-- If you want the React dev server to proxy the API, add a proxy setting in `package.json` or use environment variables.
+Install dependencies:
+```bash
+pip install requests
 
 ## Project structure (example)
 - backend/ or project root
